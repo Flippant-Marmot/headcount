@@ -11,7 +11,7 @@ var session      = require('express-session');
 // Routes
 var routes       = require('./../routes/index');
 var users        = require('./../routes/users');
-var User        = require('../app/models/user');
+var User         = require('../app/models/user');
 var auth         = require('./../routes/auth');
 
 // Authentication
