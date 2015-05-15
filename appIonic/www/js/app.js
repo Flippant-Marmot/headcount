@@ -46,7 +46,6 @@ angular.module('headcount', [
       url: '/signin',  
       templateUrl: '../templates/signin.html',
       controller: 'AuthController',
-      authenticate: false
     })
     .state('signup', {
       url: '/signup',
@@ -93,6 +92,10 @@ angular.module('headcount', [
       },
       authenticate: true          
     });
+
+    $mdThemingProvider.theme('default')
+      .primaryPalette('blue')
+      .accentPalette('red');
     
     $urlRouterProvider.otherwise('/app/events');
 })

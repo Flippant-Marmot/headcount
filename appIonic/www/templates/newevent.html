@@ -1,53 +1,51 @@
 <ion-view view-title="New Event">
   <ion-content>
     <form name="userForm" ng-model="newEvent" ng-submit="createEvent()">
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">Title</span>
-          <input type="text" ng-model="newEvent.title">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Expiration Date</span>
+      <div class="list">       
+        <md-input-container>
+            <label>Title</label>
+            <input ng-model="newEvent.title">
+        </md-input-container>
+        <md-input-container>
+          <label>Expiration Date</label>
           <input type="date" ng-model="newEvent.expiration">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Amount</span>
-          <input type="number" ng-model="newEvent.threshholdMoney">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Number of People</span>
-          <input type="number" ng-model="newEvent.thresholdPeople">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Description</span>
-          <textarea ng-model="newEvent.description"></textarea>
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Image URL</span>
-          <input type="url" ng-model="newEvent.image">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Address</span>
-          <input type="text" ng-model="user.address">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Address 2</span>
-          <input type="text" ng-model="user.address2">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">City</span>
-          <input type="text" ng-model="user.city">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">State</span>
-          <input type="text" ng-model="user.state">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Postal Codes</span>
-          <input type="text" ng-model="user.postalCode">
-        </label>
-        
-        
+        </md-input-container>
+        <md-input-container>
+            <label>Amount</label>
+            <input ng-model="newEvent.thresholdMoney">
+        </md-input-container>
+        <md-input-container>
+            <label>Number of People</label>
+            <input ng-model="newEvent.thresholdPeople">
+        </md-input-container>
+        <md-input-container>
+            <label>Description</label>
+            <textarea ng-model="newEvent.description"></textarea>
+        </md-input-container>
+        <md-input-container>
+            <label>Image URL</label>
+            <input ng-model="newEvent.image">
+        </md-input-container>
+        <md-input-container>
+            <label>Address</label>
+            <input ng-model="user.address">
+        </md-input-container>
+        <md-input-container>
+            <label>Line 2</label>
+            <input ng-model="user.address2">
+        </md-input-container>
+        <md-input-container>
+            <label>City</label>
+            <input ng-model="user.city">
+        </md-input-container>
+        <md-input-container>
+            <label>State</label>
+            <input ng-model="user.state">
+        </md-input-container>
+        <md-input-container>
+            <label>Postal Code</label>
+            <input ng-model="user.postalCode">
+        </md-input-container>
 
         <div ng-controller="EventsController as ctrl">
         <md-content class="md-padding autocomplete">
@@ -58,10 +56,9 @@
           md-contact-image="image"
           md-require-match
           filter-selected="ctrl.filterSelected"
-          placeholder="To">
+          placeholder="Invite">
         </md-contact-chips>
         <md-list class="fixedRows">
-        <md-subheader class="md-no-sticky">Contacts</md-subheader>
         <md-list-item ng-hide="true" class="md-2-line contact-item invitees" data-id="{{contact.id}}" ng-repeat="(index, contact) in ctrl.allContacts" ng-if="ctrl.contacts.indexOf(contact) < 0">
         <img ng-src="{{contact.image}}" class="md-avatar" alt="{{contact.name}}" />
         <div class="md-list-item-text compact">
@@ -76,9 +73,8 @@
         </md-list-item>
         </md-list>
         </md-content>
-
         <label class="item">
-          <button class="button button-block button-positive" ng-disabled="shouldNotBeCreatable" type="submit">Create</button>
+          <md-button ng-disabled="shouldNotBeCreatable" type="submit">Create</md-button>
         </label>
       </div>
     </form>
