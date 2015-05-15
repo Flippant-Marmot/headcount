@@ -6,8 +6,8 @@
             <input id="searchKey" type="search" placeholder="Search events" ng-model="search" autocorrect="off" >
          </label>
     </div>
-
     <ion-content class="has-header has-subheader">
+<div>EVENTS{{events}}</div>
         <ion-list>
             <ion-item ng-repeat="event in events | filter:search" type="item-text-wrap" class="item-avatar" ng-click="saveEvent(event)">
                 <img ng-src="{{ event.image }}" width="200px" height="200px"/>
