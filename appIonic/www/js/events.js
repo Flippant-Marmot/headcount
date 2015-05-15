@@ -2,6 +2,8 @@ angular.module('headcount.events', [])
 
 .controller('EventsController', function ($scope, $http, $window, $timeout, $q, EventsFactory) {
 
+$scope.width = window.innerWidth;
+
   // Stores all events that were created by you or that you were invited to
 $scope.user = {
       title: '',
@@ -239,7 +241,7 @@ $scope.user = {
       if (!hasVenmoInfo) {
         console.log('Cannot join or decline, you have not authorized your Venmo account yet!');
       } else {
-        console.log('venmo authorized');
+        console.log('venmo authorized', $scope.events);
       }
 
       EventsFactory.shouldNotBeClickable = !hasVenmoInfo;

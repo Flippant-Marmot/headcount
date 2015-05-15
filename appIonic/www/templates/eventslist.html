@@ -7,10 +7,9 @@
          </label>
     </div>
     <ion-content class="has-header has-subheader">
-<div>EVENTS{{events}}</div>
         <ion-list>
-            <ion-item ng-repeat="event in events | filter:search" type="item-text-wrap" class="item-avatar" ng-click="saveEvent(event)">
-                <img ng-src="{{ event.image }}" width="200px" height="200px"/>
+            <md-card ng-repeat="event in events | filter:search" type="item-text-wrap" class="item-avatar" ng-click="saveEvent(event)">
+                <img ng-src="{{ event.image }}" flex/>
                 <div id="{{ 'event-' + $index }}" class="info" >
                   <span> <strong> {{ event.title }} </strong> </span> <br />
                   <span> Expiration: {{ event.expiration |  date : format : timezone}} </span> <br />
@@ -18,7 +17,7 @@
                 </div>
                 <span> Cost per person: ${{ event.thresholdMoney / event.thresholdPeople | number:2 }} </span> <br />
                 <span> Remaining money needed: ${{ event.thresholdMoney - (event.committedPeople * (event.thresholdMoney / event.thresholdPeople)) | number:2}} </span>
-            </ion-item>
+            </md-card>
         </ion-list>
     </ion-content>
 

@@ -1,6 +1,6 @@
     <ion-view class="event" panel panel-primary ng-model="event">
       <div class="info" >
-        <img class="event-image" width="200px" height="200px" src="{{event.image}}" />
+        <img class="event-image" flex src="{{event.image}}" />
         <div id="{{ 'event-' + $index }}" class="info" >
           <span class="panel body"> <strong> {{ event.title }} </strong> </span> <br />
           <span class="panel body"> Expiration: {{ event.expiration |  date : format : timezone}} </span> <br />
@@ -9,7 +9,7 @@
       </div>
       <span class="panel body"> Cost per person: ${{ event.thresholdMoney / event.thresholdPeople | number:2 }} </span> <br />
       <span class="panel body"> Remaining money needed: ${{ event.thresholdMoney - event.committedMoney | number:2}} </span> <br />
-      <button class="md-raised md-primary" ng-model="shouldNotBeClickable" ng-disabled="shouldNotBeClickable" ng-click="acceptOrDeclineInvite(true, event); shouldNotBeClickable = true"> JOIN </button>
-      <button class="md-raised md-primary"ng-model="shouldNotBeClickable" ng-disabled="shouldNotBeClickable" ng-click="acceptOrDeclineInvite(false, event); shouldNotBeClickable = true"> DECLINE </button>
+      <md-button class="md-raised md-primary" ng-model="shouldNotBeClickable" ng-disabled="shouldNotBeClickable" ng-click="acceptOrDeclineInvite(true, event); shouldNotBeClickable = true"> JOIN </md-button>
+      <md-button class="md-raised md-primary"ng-model="shouldNotBeClickable" ng-disabled="shouldNotBeClickable" ng-click="acceptOrDeclineInvite(false, event); shouldNotBeClickable = true"> DECLINE </md-button>
     </ion-view>
 
