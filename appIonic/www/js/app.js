@@ -13,6 +13,7 @@ angular.module('headcount', [
   'ngMaterial',
 ])
 .run(function($ionicPlatform, $rootScope, Auth, $state) {
+  $rootScope.host = ''; //http://young-tundra-9275.herokuapp.com';
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)

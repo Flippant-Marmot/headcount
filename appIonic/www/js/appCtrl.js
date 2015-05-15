@@ -1,13 +1,13 @@
 angular.module('headcount.AppController', [])
 
-.controller('AppController', function($scope, Auth, $http, $window) {
+.controller('AppController', function($scope, $rootScope, Auth, $http, $window) {
 
   $scope.signout = function(){
 
     Auth.signout();
     return $http({
       method: 'GET',
-      url: 'http://young-tundra-9275.herokuapp.com/auth/logout'
+      url: $rootScope.host + '/auth/logout'
     })
     .then(function(resp) {
       console.log("You've signed out!");

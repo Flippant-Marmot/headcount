@@ -1,13 +1,14 @@
 angular.module('headcount.accounts', [])
 
-.controller('AccountsController', function ($scope, $window, $location, $http) {
+.controller('AccountsController', function ($scope, $rootScope, $window, $location, $http) {
 
   $scope.initialize = function() {
     var currentUser = sessionStorage.getItem('user');
-    console.log(currentUser);
+    console.log('current user at accounts$initialize: ', currentUser);
+    console.log('host ad accounts$initialize: ', $rootScope.host);
     return $http({
       method: 'POST',
-      url: 'http://young-tundra-9275.herokuapp.com/users/accountinfo', //http://young-tundra-9275.herokuapp.com/users/accountinfo
+      url: $rootScope.host + '/users/accountinfo', 
       data: {
         username: currentUser,
       }
@@ -32,7 +33,7 @@ angular.module('headcount.accounts', [])
     data.email = $scope.email;
     return $http({
       method: 'POST',
-      url: 'http://young-tundra-9275.herokuapp.com/users/accountupdate',
+      url: $rootScope.host + '/users/accountupdate',
       data: data
     })
     .then(function (resp) {
@@ -48,7 +49,7 @@ angular.module('headcount.accounts', [])
     var currentUser = sessionStorage.getItem('user');
     return $http({
       method: 'POST',
-      url : 'http://young-tundra-9275.herokuapp.com/users/checkUser',
+      url : $rootScope.host + '/users/checkUser',
       data : {'username': currentUser}
     })
     .then(function(resp){
@@ -74,7 +75,7 @@ angular.module('headcount.accounts', [])
 
     return $http({
       method: 'POST',
-      url: 'http://young-tundra-9275.herokuapp.com/authorize',
+      url: '/authorize',
       data: {
         username: currentUser,
       }

@@ -1,6 +1,6 @@
 angular.module('headcount.auth', [])
 
-.controller('AuthController', function ($scope, $window, $location, $http, Auth) {
+.controller('AuthController', function ($scope, $rootScope, $window, $location, $http, Auth) {
 
   /**
    * $scope.user holds onto any input on the signin.html and signup.html input
@@ -27,7 +27,7 @@ angular.module('headcount.auth', [])
 
     return $http({
       method: 'POST',
-      url: 'http://young-tundra-9275.herokuapp.com/auth/local',
+      url: $rootScope.host + '/auth/local',
       data: $scope.user
     })
     .then(function (resp) {
@@ -43,7 +43,7 @@ angular.module('headcount.auth', [])
 
     return $http({
       method: 'POST',
-      url: 'http://young-tundra-9275.herokuapp.com/auth/local-signup',
+      url: $rootScope.host + '/auth/local-signup',
       data: $scope.user
     })
     .then(function (resp) {
@@ -68,7 +68,7 @@ angular.module('headcount.auth', [])
     Auth.signout();
     return $http({
       method: 'GET',
-      url: 'http://young-tundra-9275.herokuapp.com/auth/logout'
+      url: $rootScope.host + '/auth/logout'
     })
     .then(function(resp) {
       $window.alert("You've signed up for all of the things!!");
