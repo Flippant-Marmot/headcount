@@ -1,24 +1,24 @@
 <ion-view title="Events">
-
-    <div class="bar bar-subheader item-input-inset">
-        <label class="item-input-wrapper">
-            <i class="icon ion-android-search placeholder-icon"></i>
-            <input id="searchKey" type="search" placeholder="Search events" ng-model="search" autocorrect="off" >
-         </label>
+  <md-toolbar class="md-primary md-hue-1">
+    <div class="md-toolbar-tools" layout-padding>
+      <md-input-container flex class="md-accent">
+        <label>Search Events</label>
+        <input ng-model="search">
+      </md-input-container>
     </div>
-    <ion-content class="has-header has-subheader">
-        <ion-list>
-            <md-card ng-repeat="event in events | filter:search" type="item-text-wrap" class="item-avatar" ng-click="saveEvent(event)">
-                <img ng-src="{{ event.image }}" flex/>
-                <div id="{{ 'event-' + $index }}" class="info" >
-                  <span> <strong> {{ event.title }} </strong> </span> <br />
-                  <span> Expiration: {{ event.expiration |  date : format : timezone}} </span> <br />
-                  <span> People needed: {{ event.thresholdPeople - event.committedPeople }} </span>
-                </div>
-                <span> Cost per person: ${{ event.thresholdMoney / event.thresholdPeople | number:2 }} </span> <br />
-                <span> Remaining money needed: ${{ event.thresholdMoney - (event.committedPeople * (event.thresholdMoney / event.thresholdPeople)) | number:2}} </span>
-            </md-card>
-        </ion-list>
-    </ion-content>
-
+  </md-toolbar>
+    <md-card ng-repeat="event in events | filter:search" type="item-text-wrap" ng-click="saveEvent(event)" class="md-primary md-hue-1">
+      <md-toolbar class="md-primary md-hue-1">
+      <div class="md-toolbar-tools">
+        <h2 style="color: white">{{ event.title }}</h2>
+      </div>
+      </md-toolbar>
+      <img ng-src="{{ event.image }}" class="md-card-image"/>
+      <md-card-content>            
+        <p> Expiration: {{ event.expiration |  date : format : timezone}} </p>
+        <p> People needed: {{ event.thresholdPeople - event.committedPeople }} </p>
+        <p> Cost per person: ${{ event.thresholdMoney / event.thresholdPeople | number:2 }} </p>
+        <p> Remaining money needed: ${{ event.thresholdMoney - (event.committedPeople * (event.thresholdMoney / event.thresholdPeople)) | number:2}} </p>
+      </md-card-content>
+    </md-card>
 </ion-view>

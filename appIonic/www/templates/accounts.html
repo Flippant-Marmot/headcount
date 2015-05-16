@@ -1,35 +1,26 @@
 <ion-view view-title="Accounts">
-  <ion-header-bar class="bar-subheader bar-dark">
-    <h1 class="title">{{username}}</h1>
-  </ion-header-bar>
-  <ion-content>
-    <!-- <section class="venmo-button"> -->
-    <label class="item" ng-show="shouldNotBeClickable">
-      <button class="button button-block button-positive" ng-click="authorize()">Authorize Your Venmo Account!</button>
-    </label>
-    <!-- </section> -->
-    <form ng-submit="accountUpdate()">
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">First Name</span>
-          <input type="text" ng-model="firstname">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Last Name</span>
-          <input type="text" ng-model="lastname">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Phone Number</span>
-          <input ng-model="telephone" type="tel" pattern="^(()?\d{3}())?(-|\s)?\d{3}(-|\s)?\d{4}$">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Email (required)</span>
-           <input ng-model="email" type="email" ng-required="true">
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Save</button>
-        </label>
-      </div>
-    </form>
-  </ion-content>
+  <md-toolbar class="md-primary md-hue-1">
+    <div class="md-toolbar-tools">
+      <h2 style="color: white">{{username}}</h2>
+    </div>
+  </md-toolbar>
+  <md-content layout-padding>
+    <md-input-container>
+      <label>First Name</label>
+      <input type="text" ng-model="firstname">
+    </md-input-container>
+    <md-input-container>
+      <label>Last Name</label>
+      <input type="text" ng-model="lastname">
+    </md-input-container>
+    <md-input-container>
+      <label>Phone Number</label>
+      <input type="tel" ng-model="telephone">
+    </md-input-container>
+    <md-input-container>
+      <label>Email</label>
+      <input type="email" ng-model="email">
+    </md-input-container>
+    <md-button ng-click="accountUpdate()">Save</md-button>
+  </md-content>
 </ion-view>

@@ -36,7 +36,7 @@ angular.module('headcount', [
 })
 .config(function($stateProvider, $urlRouterProvider, $mdThemingProvider){
   $stateProvider
-  // adds menu
+
     .state('app', {
       url: '/app',    
       templateUrl: '../templates/app.html',
@@ -94,8 +94,16 @@ angular.module('headcount', [
     });
 
     $mdThemingProvider.theme('default')
-      .primaryPalette('blue')
-      .accentPalette('red');
+      .primaryPalette('blue', {
+        'default': '900',
+        'hue-1': '700',
+        'hue-2': '200',
+        'hue-3': 'A100'
+      })
+      .accentPalette('indigo', {
+        'default': '900'
+      })
+      .backgroundPalette('grey');
     
     $urlRouterProvider.otherwise('/app/events');
 })
