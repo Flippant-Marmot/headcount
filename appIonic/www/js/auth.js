@@ -1,6 +1,6 @@
 angular.module('headcount.auth', [])
 
-.controller('AuthController', function ($scope, $rootScope, $window, $location, $http, Auth) {
+.controller('AuthController', function ($scope, $window, $location, $http, Auth, $state) {
 
   /**
    * $scope.user holds onto any input on the signin.html and signup.html input
@@ -16,25 +16,37 @@ angular.module('headcount.auth', [])
    * specifically to the user that's currently signed in.
    */
   $scope.signupNav = function() {
-    $window.location.href = "#/signup";
+   $state.go('signup');
   }
 
   $scope.signinNav = function() {
-    $window.location.href = "#/signin";
+    $state.go('signin');
   }
 
   $scope.signin = function () {
 
+    console.log("signing in before POST request to auth/local");
+    var user = JSON.stringify($scope.user);
+
     return $http({
       method: 'POST',
-      url: $rootScope.host + '/auth/local',
-      data: $scope.user
+      url: 'http://young-tundra-9275.herokuapp.com/auth/local',
+      data: user,
+      headers : {"Content-Type": 'application/json'}
     })
     .then(function (resp) {
-      $window.sessionStorage.setItem('user', resp.config.data.username);
-      $window.location.href = "/";
+      
+      console.log("$window.localStorage: ", $window.localStorage);
+
+      $window.localStorage.setItem('user', resp.config.data.username);
+
+      $state.go('app.events');
+      // $window.location.href = "/"; // for use when in web browser without Ionic
+
     })
     .catch(function(error) {
+      console.log("error is signin: ", error);
+
       $window.alert("Incorrect login, please try again!");
     });
   };
@@ -43,14 +55,21 @@ angular.module('headcount.auth', [])
 
     return $http({
       method: 'POST',
-      url: $rootScope.host + '/auth/local-signup',
-      data: $scope.user
+      url: 'https://young-tundra-9275.herokuapp.com/auth/local-signup',
+      data: $scope.user,
+      headers : {"Content-Type": 'application/json'}
     })
     .then(function (resp) {
-        $window.sessionStorage.setItem('user', resp.config.data.username);
-        $window.location.href = "/";
+        console.log("resp in auth signup: ", resp);
+
+        $window.localStorage.setItem('user', resp.config.data.username);
+        console.log("$window.sesstionStorage: ", $window.localStorage);
+
+        $state.go('signin');
     })
     .catch(function(error) {
+      console.log("error: ", error);
+      console.log("$window: ", $window);
       $window.alert("Username already exists, please try again!");
     });
   };
@@ -68,7 +87,7 @@ angular.module('headcount.auth', [])
     Auth.signout();
     return $http({
       method: 'GET',
-      url: $rootScope.host + '/auth/logout'
+      url: 'https://young-tundra-9275.herokuapp.com/auth/logout'
     })
     .then(function(resp) {
       $window.alert("You've signed up for all of the things!!");

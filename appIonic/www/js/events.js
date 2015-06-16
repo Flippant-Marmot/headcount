@@ -1,6 +1,8 @@
 angular.module('headcount.events', [])
 
-.controller('EventsController', function ($scope, $rootScope, $http, $window, $timeout, $q, EventsFactory) {
+.controller('EventsController', function ($scope, $http, $window, $timeout, $q, EventsFactory, $rootScope) {
+
+$scope.width = window.innerWidth;
 
   // Stores all events that were created by you or that you were invited to
 $scope.user = {
@@ -41,7 +43,8 @@ $scope.user = {
   $scope.saveEvent = function(link) {
     $scope.showEvent = true;
     EventsFactory.currentEvent = link;
-    $window.location.href = "#/app/event";
+    $rootScope.toggleRight(link);
+    // $window.location.href = "#/app/event";
   };
 
   // Event object that's populated via creation form and then posted for creation
@@ -61,14 +64,12 @@ $scope.user = {
   $scope.fetchEvents = function () {
     return $http({
       method: 'GET',
-      url: $rootScope.host + '/events-fetch'
+      url: 'https://young-tundra-9275.herokuapp.com/events-fetch'
     })
     .then(function(resp) {
       if (resp.data.length >= 1) {
         $scope.events = resp.data;
-        console.log($scope.events);
       } else {
-        console.log("THERE ARE NO EVENTS TO FETCH!!!");
       }
     });
   };
@@ -81,7 +82,7 @@ $scope.user = {
   $scope.fetchInviteIDs = function () {
     return $http({
       method: 'GET',
-      url: $rootScope.host + '/invite-events-fetch'
+      url: 'https://young-tundra-9275.herokuapp.com/invite-events-fetch'
     })
     .then(function(resp) {
       $scope.fetchInviteEvents(resp.data);
@@ -91,7 +92,7 @@ $scope.user = {
   $scope.fetchInviteEvents = function (ids) {
     return $http({
       method: 'POST',
-      url: $rootScope.host + '/invite-events-fetch',
+      url: 'https://young-tundra-9275.herokuapp.com/invite-events-fetch',
       data: {ids: ids}
     })
     .then(function(resp) {
@@ -110,12 +111,10 @@ $scope.user = {
   $scope.fetchUsers = function () {
     return $http({
       method: 'GET',
-      url: $rootScope.host + '/users-fetch'
+      url: 'https://young-tundra-9275.herokuapp.com/users-fetch'
     })
     .then(function(resp) {
       $scope.userList = resp.data;
-      console.log("USER LIST!!!" + $scope.userList);
-      console.log("HOST!!!" + $rootScope.host);
 
       self.querySearch = querySearch;
       self.allContacts = loadContacts();
@@ -133,7 +132,6 @@ $scope.user = {
        * Create filter function for a query string
        */
       function createFilterFor(query) {
-        console.log('filtering');
         var lowercaseQuery = angular.lowercase(query);
         return function filterFn(contact) {
           return (contact._lowername.indexOf(lowercaseQuery) !== -1);
@@ -164,20 +162,18 @@ $scope.user = {
    * Creates an event with $scope.newEvent data
    */
   $scope.createEvent = function() {
-    console.log('EVENT DATA', $scope.newEvent);
     var inv = [];
     var list = $('.selected .compact');
     for (var i = 0; i < list.length; i++){
       inv.push(list[i].children[0].innerText);
     }
-    // console.log('inv',inv);
     $scope.invitedUsers = inv;
 
     $scope.newEvent.invited = $scope.invitedUsers;
-    // console.log('Event details', $scope.newEvent);
+
     return $http({
       method: 'POST',
-      url: $rootScope.host + '/events-create',
+      url: 'https://young-tundra-9275.herokuapp.com/events-create',
       data: $scope.newEvent
     })
     .then(function(resp) {
@@ -186,12 +182,11 @@ $scope.user = {
   };
 
   $scope.acceptOrDeclineInvite = function(acceptOrDeclineBoolean, $event) {
-    console.log('accepting invite?', acceptOrDeclineBoolean);
 
     var eventId = this.event.id;
     return $http({
       method: 'POST',
-      url: $rootScope.host + '/invite-response',
+      url: 'https://young-tundra-9275.herokuapp.com/invite-response',
       data: {
         eventId: eventId,
         accepted: acceptOrDeclineBoolean
@@ -209,7 +204,6 @@ $scope.user = {
    * Invoked by $scope.acceptOrDeclineInvite
    */
   $scope.updateEventInfo = function(resp, $event) {
-    // console.log(resp);
 
     var numNeeded = Number(resp.data.eventInfo.thresholdPeople);
     var cashNeeded = Number(resp.data.eventInfo.thresholdMoney);
@@ -227,21 +221,15 @@ $scope.user = {
    */
   $scope.checkEventPermissions = function(){
 
-    var currentUser = sessionStorage.getItem('user');
+    var currentUser = localStorage.getItem('user');
     return $http({
       method: 'POST',
-      url : $rootScope.host + '/users/checkUser',
+      url : 'https://young-tundra-9275.herokuapp.com/users/checkUser',
       data : {'username': currentUser}
     })
     .then(function(resp){
       var hasVenmoInfo = resp.data.hasVenmoInfo;
       var disabledEventIds = resp.data.relatedEventIds;
-
-      if (!hasVenmoInfo) {
-        console.log('Cannot join or decline, you have not authorized your Venmo account yet!');
-      } else {
-        console.log('venmo authorized');
-      }
 
       EventsFactory.shouldNotBeClickable = !hasVenmoInfo;
       $scope.shouldNotBeClickable = !hasVenmoInfo;
@@ -257,7 +245,6 @@ $scope.user = {
        * Prevents joining or decline events if you are the event creator
        */
         if ($scope.event.user_id === resp.data.userID.toString()) {
-          console.log('Cannot join or decline, you created this event!');
           $scope.shouldNotBeClickable = true;
         }
 
@@ -267,7 +254,6 @@ $scope.user = {
         if (disabledEventIds) {
           for (var i = 0; i < disabledEventIds.length; i++) {
             if (disabledEventIds[i].toString() === $scope.event.id.toString()) {
-              console.log('Cannot join or decline, you already did!');
               $scope.shouldNotBeClickable = true;
             }
           }
@@ -289,4 +275,3 @@ $scope.user = {
 
 
 });
-

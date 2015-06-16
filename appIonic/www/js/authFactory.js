@@ -4,11 +4,11 @@ angular.module('headcount.services', [])
 
   var isAuth = function () {
     console.log('USERFOUND!!!!!!!!!!!');
-    return !!$window.sessionStorage.getItem('user');
+    return !!$window.localStorage.getItem('user');
   };
 
   var signout = function () {
-    $window.sessionStorage.removeItem('user');
+    $window.localStorage.removeItem('user');
     $location.path('/signin');
   };
 

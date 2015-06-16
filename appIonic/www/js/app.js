@@ -10,16 +10,16 @@ angular.module('headcount', [
   'headcount.events',
   'headcount.accounts',
   'headcount.auth',
-  'ngMaterial',
+  'ngMaterial'
 ])
 .run(function($ionicPlatform, $rootScope, Auth, $state) {
   $rootScope.host = ''; //http://young-tundra-9275.herokuapp.com';
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
+    // if(window.cordova && window.cordova.plugins.Keyboard) {
+    //   cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    // }
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
@@ -35,29 +35,31 @@ angular.module('headcount', [
     }
   });
 })
-.config(function($stateProvider, $urlRouterProvider, $mdThemingProvider){
+.config(function($stateProvider, $urlRouterProvider){
   $stateProvider
-  // adds menu
+
     .state('app', {
       url: '/app',    
-      templateUrl: '../templates/app.html',
+      templateUrl: '../www/templates/app.html',
+      // for development on phone add www/ as beginning route path
+      // for development on web browser, take out www/
       controller: 'AppController'
     })    
     .state('signin', {
       url: '/signin',  
-      templateUrl: '../templates/signin.html',
+      templateUrl: '../www/templates/signin.html',
       controller: 'AuthController',
     })
     .state('signup', {
       url: '/signup',
-      templateUrl: '../templates/signup.html',
+      templateUrl: '../www/templates/signup.html',
       controller: 'AuthController'
     })
     .state('app.event', {
       url: '/event',
       views: {
         'menuContent': {
-          templateUrl: '../templates/event.html',
+          templateUrl: '../www/templates/event.html',
           controller: 'EventsController'
         }
       },
@@ -67,7 +69,7 @@ angular.module('headcount', [
       url: '/events',
       views: {
         'menuContent': {
-          templateUrl: '../templates/eventslist.html',
+          templateUrl: '../www/templates/eventslist.html',
           controller: 'EventsController'
         }
       },
@@ -77,7 +79,7 @@ angular.module('headcount', [
       url: '/newevent',
       views: {
         'menuContent': {
-          templateUrl: '../templates/newevent.html',
+          templateUrl: '../www/templates/newevent.html',
           controller: 'EventsController'
         }
       },
@@ -87,18 +89,28 @@ angular.module('headcount', [
       url: '/accounts',
       views: {
         'menuContent': {
-          templateUrl: '../templates/accounts.html',
+          templateUrl: '../www/templates/accounts.html',
           controller: 'AccountsController'
         }
       },
       authenticate: true          
     });
 
-    $mdThemingProvider.theme('default')
-      .primaryPalette('blue')
-      .accentPalette('red');
+    // $mdThemingProvider.theme('default')
+    //   .primaryPalette('blue', {
+    //     'default': '900',
+    //     'hue-1': '700',
+    //     'hue-2': '200',
+    //     'hue-3': 'A100'
+    //   })
+    //   .accentPalette('indigo', {
+    //     'default': '900'
+    //   })
+    //   .backgroundPalette('grey');
     
-    $urlRouterProvider.otherwise('/app/events');
+    
+
+    $urlRouterProvider.otherwise('/signin');
 })
 .factory('EventsFactory', function ($rootScope) {
   var eventServices = {};
@@ -117,7 +129,7 @@ angular.module('headcount', [
   // TODO: Make this more secure, use passport or bcrypt.
   var attach = {
     request: function (object) {
-      var username = $window.sessionStorage.getItem('user');
+      var username = $window.localStorage.getItem('user');
       if (username) {
         object.headers['x-access-token'] = username;
       }

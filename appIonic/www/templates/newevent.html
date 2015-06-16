@@ -1,7 +1,7 @@
 <ion-view view-title="New Event">
   <ion-content>
     <form name="userForm" ng-model="newEvent" ng-submit="createEvent()">
-      <div class="list">       
+      <md-content layout-padding layout="column">      
         <md-input-container>
             <label>Title</label>
             <input ng-model="newEvent.title">
@@ -73,10 +73,8 @@
         </md-list-item>
         </md-list>
         </md-content>
-        <label class="item">
-          <md-button ng-disabled="shouldNotBeCreatable" type="submit">Create</md-button>
-        </label>
-      </div>
+          <md-button class="md-primary" ng-disabled="shouldNotBeCreatable" type="submit">Create</md-button>
+      </md-content>
     </form>
   </ion-content>
 </ion-view>

@@ -1,15 +1,24 @@
-    <ion-view class="event" panel panel-primary ng-model="event">
-      <div class="info" >
-        <img class="event-image" width="200px" height="200px" src="{{event.image}}" />
-        <div id="{{ 'event-' + $index }}" class="info" >
-          <span class="panel body"> <strong> {{ event.title }} </strong> </span> <br />
-          <span class="panel body"> Expiration: {{ event.expiration |  date : format : timezone}} </span> <br />
-          <span class="panel body"> People needed: {{ event.thresholdPeople }} </span>
-        </div>
+    <ion-view ng-model="event" view-title="Event Info">
+    <md-toolbar class="md-primary md-hue-1">
+      <div class="md-toolbar-tools">
+        <span flex></span>
+        <h1>
+          {{event.title}}
+        </h1>
+        <span flex></span>
       </div>
-      <span class="panel body"> Cost per person: ${{ event.thresholdMoney / event.thresholdPeople | number:2 }} </span> <br />
-      <span class="panel body"> Remaining money needed: ${{ event.thresholdMoney - event.committedMoney | number:2}} </span> <br />
-      <button class="md-raised md-primary" ng-model="shouldNotBeClickable" ng-disabled="shouldNotBeClickable" ng-click="acceptOrDeclineInvite(true, event); shouldNotBeClickable = true"> JOIN </button>
-      <button class="md-raised md-primary"ng-model="shouldNotBeClickable" ng-disabled="shouldNotBeClickable" ng-click="acceptOrDeclineInvite(false, event); shouldNotBeClickable = true"> DECLINE </button>
+    </md-toolbar>
+      <div class="info" >
+        <div>
+          <img class="event-image eventimage" src="{{event.image}}" />
+        </div>
+      <md-content>
+      <p> Expiration: {{ event.expiration |  date : format : timezone}} </p>
+      <p> People needed: {{ event.thresholdPeople }} </p>
+      <p> Cost per person: ${{ event.thresholdMoney / event.thresholdPeople | number:2 }} </p>
+      <p> Remaining money needed: ${{ event.thresholdMoney - event.committedMoney | number:2}} </p>
+      </md-content>
+      <md-button class="md-raised md-primary" ng-model="shouldNotBeClickable" ng-disabled="shouldNotBeClickable" ng-click="acceptOrDeclineInvite(true, event); shouldNotBeClickable = true"> JOIN </md-button>
+      <md-button class="md-raised md-primary"ng-model="shouldNotBeClickable" ng-disabled="shouldNotBeClickable" ng-click="acceptOrDeclineInvite(false, event); shouldNotBeClickable = true"> DECLINE </md-button>
     </ion-view>
 

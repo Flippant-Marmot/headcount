@@ -3,11 +3,11 @@ angular.module('headcount.services', [])
 .factory('Auth', function ($http, $location, $window) {
 
   var isAuth = function () {
-    return !!$window.sessionStorage.getItem('user');
+    return !!$window.localStorage.getItem('user');
   };
 
   var signout = function () {
-    $window.sessionStorage.removeItem('user');
+    $window.localStorage.removeItem('user');
     $location.path('/signin');
   };
 

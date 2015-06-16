@@ -1,14 +1,13 @@
 angular.module('headcount.accounts', [])
 
-.controller('AccountsController', function ($scope, $rootScope, $window, $location, $http) {
+.controller('AccountsController', function ($scope, $window, $location, $http) {
 
   $scope.initialize = function() {
-    var currentUser = sessionStorage.getItem('user');
-    console.log('current user at accounts$initialize: ', currentUser);
-    console.log('host ad accounts$initialize: ', $rootScope.host);
+    var currentUser = localStorage.getItem('user');
+    console.log(currentUser);
     return $http({
       method: 'POST',
-      url: $rootScope.host + '/users/accountinfo', 
+      url: 'https://young-tundra-9275.herokuapp.com/users/accountinfo', //http://young-tundra-9275.herokuapp.com/users/accountinfo
       data: {
         username: currentUser,
       }
@@ -25,7 +24,7 @@ angular.module('headcount.accounts', [])
 
   $scope.accountUpdate = function() {
     console.log('updating account');
-    var currentUser = sessionStorage.getItem('user');
+    var currentUser = localStorage.getItem('user');
     var data = {};
     data.username = $scope.username;
     data.firstName = $scope.firstname;
@@ -33,57 +32,16 @@ angular.module('headcount.accounts', [])
     data.email = $scope.email;
     return $http({
       method: 'POST',
-      url: $rootScope.host + '/users/accountupdate',
+      url: 'https://young-tundra-9275.herokuapp.com/users/accountupdate',
       data: data
     })
     .then(function (resp) {
-      console.log('account updated');
+      $window.location.href = "#/app/events";
     });
   };
 
   /**
    * Checks if user has already authorized his/her Venmo account
    */
-  $scope.checkVenmoDetails = function(){
-
-    var currentUser = sessionStorage.getItem('user');
-    return $http({
-      method: 'POST',
-      url : $rootScope.host + '/users/checkUser',
-      data : {'username': currentUser}
-    })
-    .then(function(resp){
-      console.log(resp.data);
-      var hasVenmoInfo = resp.data.hasVenmoInfo;
-
-      if (!hasVenmoInfo) {
-        console.log('You have not authorized your Venmo account yet!');
-      }
-
-      $scope.shouldNotBeClickable = !hasVenmoInfo;
-    });
-  };
-
-  $scope.checkVenmoDetails();
-
-  /**
-   * Handles Venmo button submittal.
-   * Gets Connect account creation redirect url from server and manually sets href.
-   */
-  $scope.authorize = function() {
-    var currentUser = sessionStorage.getItem('user');
-
-    return $http({
-      method: 'POST',
-      url: '/authorize',
-      data: {
-        username: currentUser,
-      }
-    })
-    .then(function (resp) {
-      console.log(resp);
-      $window.location.href = resp.data;
-    });
-  };
 
 });
