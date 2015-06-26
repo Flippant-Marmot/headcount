@@ -1,5 +1,21 @@
-# headcount
-Friendfunding for trips, events, presents and more.
+# Headcount
+Goal funding app for friends to automatically split the cost with Venmo after everyone agrees to chip in.
+
+# Web version
+http://www.theheadcount.com/
+<br>
+<img src="./appIonic/www/img/web-event.png" width="600px">
+
+# Mobile version
+Compatible with iOS and Android
+<br>
+
+<img src="./appIonic/www/img/mobile-event.png" width="250px">
+<img src="./appIonic/www/img/mobile-date.png" width="250px">
+<img src="./appIonic/www/img/mobile-side.png" width="250px">
+
+# Public use of this app has been deprecated
+For security reasons, the Venmo developer account used to authorize this application has been deactivated and the database tables have been dropped. Setting up the application with your own developer account should be fairly painless. Good luck!
 
 ![](http://i.imgur.com/waHy1p7t.png)
 
