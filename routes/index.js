@@ -45,6 +45,8 @@ router.get('/invite-events-fetch', function(req, res, next) {
         invites.push(parseInt(collection.at(i).attributes.event_id));
       }
       res.json(invites);
+    }, function(error) {
+      console.log('Invite get Error: ', error);
     });
 });
 
@@ -69,7 +71,9 @@ router.post('/invite-events-fetch', function(req, res, next) {
         } else {
           events.push(model);
         }
-      });
+      }, function(error) {
+      console.log('Invite post Error: ', error);
+    });
   }
 
   for (var i = 0; i < ids.length; i++) {
